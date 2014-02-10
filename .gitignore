@@ -1,0 +1,10 @@
+*.cmt
+*.cmx
+*.cmi
+*.cmo
+*.o
+*.cmti
+*.*#
+*.*~
+*.npk
+bin

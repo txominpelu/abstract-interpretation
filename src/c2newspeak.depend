@@ -1,0 +1,150 @@
+version.cmi :
+utils/listUtils.cmi :
+utils/standardApplication.cmi :
+newspeak/eBigInt.cmi :
+newspeak/config.cmi :
+newspeak/temps.cmi :
+newspeak/newspeak.cmi : newspeak/eBigInt.cmi newspeak/config.cmi
+newspeak/npkcontext.cmi : newspeak/newspeak.cmi
+newspeak/lowspeak.cmi : newspeak/newspeak.cmi
+newspeak/npk2lpk.cmi : newspeak/newspeak.cmi newspeak/lowspeak.cmi
+newspeak/npkil.cmi : newspeak/newspeak.cmi
+newspeak/cir.cmi : newspeak/npkil.cmi newspeak/newspeak.cmi
+newspeak/cir2npkil.cmi : newspeak/npkil.cmi newspeak/newspeak.cmi \
+    newspeak/cir.cmi
+newspeak/linker.cmi :
+newspeak/x2newspeak.cmi :
+c2newspeak/pp_syntax.cmi :
+c2newspeak/pp_parser.cmi : c2newspeak/pp_syntax.cmi
+c2newspeak/csyntax.cmi : newspeak/newspeak.cmi newspeak/cir.cmi
+c2newspeak/typedC.cmi : newspeak/newspeak.cmi newspeak/cir.cmi
+c2newspeak/synthack.cmi : newspeak/newspeak.cmi c2newspeak/csyntax.cmi
+c2newspeak/gnuc.cmi : c2newspeak/parser.cmi
+c2newspeak/parser.cmi : c2newspeak/csyntax.cmi
+c2newspeak/gotoElimination.cmi : c2newspeak/csyntax.cmi
+c2newspeak/csyntax2TypedC.cmi : c2newspeak/typedC.cmi c2newspeak/csyntax.cmi
+c2newspeak/typedC2Cir.cmi : c2newspeak/typedC.cmi newspeak/cir.cmi
+c2newspeak/compiler.cmi : newspeak/npkil.cmi
+c2newspeak/params.cmi :
+version.cmo : version.cmi
+version.cmx : version.cmi
+utils/listUtils.cmo : utils/listUtils.cmi
+utils/listUtils.cmx : utils/listUtils.cmi
+utils/standardApplication.cmo : utils/standardApplication.cmi
+utils/standardApplication.cmx : utils/standardApplication.cmi
+newspeak/eBigInt.cmo : newspeak/eBigInt.cmi
+newspeak/eBigInt.cmx : newspeak/eBigInt.cmi
+newspeak/config.cmo : newspeak/config.cmi
+newspeak/config.cmx : newspeak/config.cmi
+newspeak/temps.cmo : newspeak/temps.cmi
+newspeak/temps.cmx : newspeak/temps.cmi
+newspeak/newspeak.cmo : version.cmi newspeak/temps.cmi newspeak/eBigInt.cmi \
+    newspeak/config.cmi newspeak/newspeak.cmi
+newspeak/newspeak.cmx : version.cmx newspeak/temps.cmx newspeak/eBigInt.cmx \
+    newspeak/config.cmx newspeak/newspeak.cmi
+newspeak/npkcontext.cmo : utils/standardApplication.cmi \
+    newspeak/newspeak.cmi newspeak/npkcontext.cmi
+newspeak/npkcontext.cmx : utils/standardApplication.cmx \
+    newspeak/newspeak.cmx newspeak/npkcontext.cmi
+newspeak/lowspeak.cmo : utils/standardApplication.cmi \
+    newspeak/npkcontext.cmi newspeak/newspeak.cmi newspeak/config.cmi \
+    newspeak/lowspeak.cmi
+newspeak/lowspeak.cmx : utils/standardApplication.cmx \
+    newspeak/npkcontext.cmx newspeak/newspeak.cmx newspeak/config.cmx \
+    newspeak/lowspeak.cmi
+newspeak/npk2lpk.cmo : newspeak/temps.cmi newspeak/npkcontext.cmi \
+    newspeak/newspeak.cmi newspeak/lowspeak.cmi newspeak/npk2lpk.cmi
+newspeak/npk2lpk.cmx : newspeak/temps.cmx newspeak/npkcontext.cmx \
+    newspeak/newspeak.cmx newspeak/lowspeak.cmx newspeak/npk2lpk.cmi
+newspeak/npkil.cmo : newspeak/npkcontext.cmi newspeak/newspeak.cmi \
+    newspeak/config.cmi newspeak/npkil.cmi
+newspeak/npkil.cmx : newspeak/npkcontext.cmx newspeak/newspeak.cmx \
+    newspeak/config.cmx newspeak/npkil.cmi
+newspeak/cir.cmo : newspeak/temps.cmi newspeak/npkil.cmi \
+    newspeak/npkcontext.cmi newspeak/newspeak.cmi utils/listUtils.cmi \
+    newspeak/eBigInt.cmi newspeak/config.cmi newspeak/cir.cmi
+newspeak/cir.cmx : newspeak/temps.cmx newspeak/npkil.cmx \
+    newspeak/npkcontext.cmx newspeak/newspeak.cmx utils/listUtils.cmx \
+    newspeak/eBigInt.cmx newspeak/config.cmx newspeak/cir.cmi
+newspeak/cir2npkil.cmo : newspeak/npkil.cmi newspeak/npkcontext.cmi \
+    newspeak/newspeak.cmi newspeak/cir.cmi newspeak/cir2npkil.cmi
+newspeak/cir2npkil.cmx : newspeak/npkil.cmx newspeak/npkcontext.cmx \
+    newspeak/newspeak.cmx newspeak/cir.cmx newspeak/cir2npkil.cmi
+newspeak/linker.cmo : newspeak/temps.cmi newspeak/npkil.cmi \
+    newspeak/npkcontext.cmi newspeak/npk2lpk.cmi newspeak/newspeak.cmi \
+    newspeak/lowspeak.cmi newspeak/config.cmi newspeak/linker.cmi
+newspeak/linker.cmx : newspeak/temps.cmx newspeak/npkil.cmx \
+    newspeak/npkcontext.cmx newspeak/npk2lpk.cmx newspeak/newspeak.cmx \
+    newspeak/lowspeak.cmx newspeak/config.cmx newspeak/linker.cmi
+newspeak/x2newspeak.cmo : newspeak/npkcontext.cmi newspeak/x2newspeak.cmi
+newspeak/x2newspeak.cmx : newspeak/npkcontext.cmx newspeak/x2newspeak.cmi
+c2newspeak/pp_syntax.cmo : c2newspeak/pp_syntax.cmi
+c2newspeak/pp_syntax.cmx : c2newspeak/pp_syntax.cmi
+c2newspeak/pp_parser.cmo : c2newspeak/pp_syntax.cmi c2newspeak/pp_parser.cmi
+c2newspeak/pp_parser.cmx : c2newspeak/pp_syntax.cmx c2newspeak/pp_parser.cmi
+c2newspeak/pp_lexer.cmo : c2newspeak/pp_parser.cmi newspeak/npkcontext.cmi
+c2newspeak/pp_lexer.cmx : c2newspeak/pp_parser.cmx newspeak/npkcontext.cmx
+c2newspeak/csyntax.cmo : newspeak/npkcontext.cmi newspeak/newspeak.cmi \
+    utils/listUtils.cmi newspeak/config.cmi newspeak/cir.cmi \
+    c2newspeak/csyntax.cmi
+c2newspeak/csyntax.cmx : newspeak/npkcontext.cmx newspeak/newspeak.cmx \
+    utils/listUtils.cmx newspeak/config.cmx newspeak/cir.cmx \
+    c2newspeak/csyntax.cmi
+c2newspeak/typedC.cmo : newspeak/npkcontext.cmi newspeak/newspeak.cmi \
+    newspeak/config.cmi newspeak/cir.cmi c2newspeak/typedC.cmi
+c2newspeak/typedC.cmx : newspeak/npkcontext.cmx newspeak/newspeak.cmx \
+    newspeak/config.cmx newspeak/cir.cmx c2newspeak/typedC.cmi
+c2newspeak/synthack.cmo : newspeak/npkcontext.cmi newspeak/newspeak.cmi \
+    c2newspeak/csyntax.cmi newspeak/cir.cmi c2newspeak/synthack.cmi
+c2newspeak/synthack.cmx : newspeak/npkcontext.cmx newspeak/newspeak.cmx \
+    c2newspeak/csyntax.cmx newspeak/cir.cmx c2newspeak/synthack.cmi
+c2newspeak/gnuc.cmo : c2newspeak/parser.cmi newspeak/npkcontext.cmi \
+    c2newspeak/gnuc.cmi
+c2newspeak/gnuc.cmx : c2newspeak/parser.cmx newspeak/npkcontext.cmx \
+    c2newspeak/gnuc.cmi
+c2newspeak/parser.cmo : newspeak/temps.cmi c2newspeak/synthack.cmi \
+    newspeak/npkcontext.cmi newspeak/newspeak.cmi utils/listUtils.cmi \
+    c2newspeak/csyntax.cmi newspeak/config.cmi c2newspeak/parser.cmi
+c2newspeak/parser.cmx : newspeak/temps.cmx c2newspeak/synthack.cmx \
+    newspeak/npkcontext.cmx newspeak/newspeak.cmx utils/listUtils.cmx \
+    c2newspeak/csyntax.cmx newspeak/config.cmx c2newspeak/parser.cmi
+c2newspeak/lexer.cmo : c2newspeak/synthack.cmi c2newspeak/pp_syntax.cmi \
+    c2newspeak/pp_parser.cmi c2newspeak/pp_lexer.cmo c2newspeak/parser.cmi \
+    newspeak/npkcontext.cmi c2newspeak/gnuc.cmi
+c2newspeak/lexer.cmx : c2newspeak/synthack.cmx c2newspeak/pp_syntax.cmx \
+    c2newspeak/pp_parser.cmx c2newspeak/pp_lexer.cmx c2newspeak/parser.cmx \
+    newspeak/npkcontext.cmx c2newspeak/gnuc.cmx
+c2newspeak/gotoElimination.cmo : newspeak/temps.cmi newspeak/newspeak.cmi \
+    c2newspeak/csyntax.cmi newspeak/cir.cmi c2newspeak/gotoElimination.cmi
+c2newspeak/gotoElimination.cmx : newspeak/temps.cmx newspeak/newspeak.cmx \
+    c2newspeak/csyntax.cmx newspeak/cir.cmx c2newspeak/gotoElimination.cmi
+c2newspeak/csyntax2TypedC.cmo : c2newspeak/typedC.cmi newspeak/temps.cmi \
+    newspeak/npkcontext.cmi newspeak/newspeak.cmi c2newspeak/gnuc.cmi \
+    c2newspeak/csyntax.cmi newspeak/config.cmi c2newspeak/csyntax2TypedC.cmi
+c2newspeak/csyntax2TypedC.cmx : c2newspeak/typedC.cmx newspeak/temps.cmx \
+    newspeak/npkcontext.cmx newspeak/newspeak.cmx c2newspeak/gnuc.cmx \
+    c2newspeak/csyntax.cmx newspeak/config.cmx c2newspeak/csyntax2TypedC.cmi
+c2newspeak/typedC2Cir.cmo : c2newspeak/typedC.cmi newspeak/temps.cmi \
+    newspeak/npkil.cmi newspeak/npkcontext.cmi newspeak/newspeak.cmi \
+    newspeak/config.cmi newspeak/cir.cmi c2newspeak/typedC2Cir.cmi
+c2newspeak/typedC2Cir.cmx : c2newspeak/typedC.cmx newspeak/temps.cmx \
+    newspeak/npkil.cmx newspeak/npkcontext.cmx newspeak/newspeak.cmx \
+    newspeak/config.cmx newspeak/cir.cmx c2newspeak/typedC2Cir.cmi
+c2newspeak/compiler.cmo : c2newspeak/typedC2Cir.cmi c2newspeak/synthack.cmi \
+    c2newspeak/parser.cmi newspeak/npkcontext.cmi newspeak/newspeak.cmi \
+    c2newspeak/lexer.cmo c2newspeak/gotoElimination.cmi c2newspeak/gnuc.cmi \
+    c2newspeak/csyntax2TypedC.cmi c2newspeak/csyntax.cmi \
+    newspeak/cir2npkil.cmi newspeak/cir.cmi c2newspeak/compiler.cmi
+c2newspeak/compiler.cmx : c2newspeak/typedC2Cir.cmx c2newspeak/synthack.cmx \
+    c2newspeak/parser.cmx newspeak/npkcontext.cmx newspeak/newspeak.cmx \
+    c2newspeak/lexer.cmx c2newspeak/gotoElimination.cmx c2newspeak/gnuc.cmx \
+    c2newspeak/csyntax2TypedC.cmx c2newspeak/csyntax.cmx \
+    newspeak/cir2npkil.cmx newspeak/cir.cmx c2newspeak/compiler.cmi
+c2newspeak/params.cmo : version.cmi c2newspeak/params.cmi
+c2newspeak/params.cmx : version.cmx c2newspeak/params.cmi
+c2newspeak/c2newspeak.cmo : newspeak/x2newspeak.cmi c2newspeak/params.cmi \
+    newspeak/npkil.cmi newspeak/npkcontext.cmi newspeak/linker.cmi \
+    c2newspeak/compiler.cmi
+c2newspeak/c2newspeak.cmx : newspeak/x2newspeak.cmx c2newspeak/params.cmx \
+    newspeak/npkil.cmx newspeak/npkcontext.cmx newspeak/linker.cmx \
+    c2newspeak/compiler.cmx

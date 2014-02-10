@@ -1,0 +1,22 @@
+version.cmi :
+newspeak/temps.cmi :
+newspeak/config.cmi :
+newspeak/eBigInt.cmi :
+utils/standardApplication.cmi :
+newspeak/newspeak.cmi : newspeak/eBigInt.cmi newspeak/config.cmi
+version.cmo : version.cmi
+version.cmx : version.cmi
+newspeak/temps.cmo : newspeak/temps.cmi
+newspeak/temps.cmx : newspeak/temps.cmi
+newspeak/config.cmo : newspeak/config.cmi
+newspeak/config.cmx : newspeak/config.cmi
+newspeak/eBigInt.cmo : newspeak/eBigInt.cmi
+newspeak/eBigInt.cmx : newspeak/eBigInt.cmi
+utils/standardApplication.cmo : utils/standardApplication.cmi
+utils/standardApplication.cmx : utils/standardApplication.cmi
+newspeak/newspeak.cmo : version.cmi newspeak/temps.cmi newspeak/eBigInt.cmi \
+    newspeak/config.cmi newspeak/newspeak.cmi
+newspeak/newspeak.cmx : version.cmx newspeak/temps.cmx newspeak/eBigInt.cmx \
+    newspeak/config.cmx newspeak/newspeak.cmi
+npkstrip/npkstrip.cmo : utils/standardApplication.cmi newspeak/newspeak.cmi
+npkstrip/npkstrip.cmx : utils/standardApplication.cmx newspeak/newspeak.cmx

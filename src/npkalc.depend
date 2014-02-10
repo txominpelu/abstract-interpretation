@@ -1,0 +1,15 @@
+utils/standardApplication.cmi :
+npkalc/utils.cmi :
+npkalc/callGraph.cmi : newspeak/newspeak.cmi
+utils/standardApplication.cmo : utils/standardApplication.cmi
+utils/standardApplication.cmx : utils/standardApplication.cmi
+npkalc/utils.cmo : npkalc/utils.cmi
+npkalc/utils.cmx : npkalc/utils.cmi
+npkalc/callGraph.cmo : npkalc/utils.cmi newspeak/newspeak.cmi \
+    npkalc/callGraph.cmi
+npkalc/callGraph.cmx : npkalc/utils.cmx newspeak/newspeak.cmx \
+    npkalc/callGraph.cmi
+npkalc/npkalc.cmo : npkalc/utils.cmi utils/standardApplication.cmi \
+    newspeak/newspeak.cmi npkalc/callGraph.cmi
+npkalc/npkalc.cmx : npkalc/utils.cmx utils/standardApplication.cmx \
+    newspeak/newspeak.cmx npkalc/callGraph.cmx

@@ -1,0 +1,43 @@
+version.cmi :
+newspeak/temps.cmi :
+newspeak/config.cmi :
+newspeak/eBigInt.cmi :
+newspeak/newspeak.cmi : newspeak/eBigInt.cmi newspeak/config.cmi
+utils/listUtils.cmi :
+npknull/memloc.cmi :
+npknull/exceptions.cmi :
+npknull/subst.cmi : npknull/memloc.cmi
+npknull/fieldInsensitivePtrOffs.cmi : npknull/subst.cmi npknull/memloc.cmi \
+    npknull/dom.cmi
+version.cmo : version.cmi
+version.cmx : version.cmi
+newspeak/temps.cmo : newspeak/temps.cmi
+newspeak/temps.cmx : newspeak/temps.cmi
+newspeak/config.cmo : newspeak/config.cmi
+newspeak/config.cmx : newspeak/config.cmi
+newspeak/eBigInt.cmo : newspeak/eBigInt.cmi
+newspeak/eBigInt.cmx : newspeak/eBigInt.cmi
+newspeak/newspeak.cmo : version.cmi newspeak/temps.cmi newspeak/eBigInt.cmi \
+    newspeak/config.cmi newspeak/newspeak.cmi
+newspeak/newspeak.cmx : version.cmx newspeak/temps.cmx newspeak/eBigInt.cmx \
+    newspeak/config.cmx newspeak/newspeak.cmi
+utils/listUtils.cmo : utils/listUtils.cmi
+utils/listUtils.cmx : utils/listUtils.cmi
+npknull/memloc.cmo : npknull/memloc.cmi
+npknull/memloc.cmx : npknull/memloc.cmi
+npknull/exceptions.cmo : npknull/exceptions.cmi
+npknull/exceptions.cmx : npknull/exceptions.cmi
+npknull/subst.cmo : npknull/memloc.cmi utils/listUtils.cmi \
+    npknull/exceptions.cmi npknull/subst.cmi
+npknull/subst.cmx : npknull/memloc.cmx utils/listUtils.cmx \
+    npknull/exceptions.cmx npknull/subst.cmi
+npknull/fieldInsensitivePtrOffs.cmo : npknull/subst.cmi \
+    newspeak/newspeak.cmi npknull/memloc.cmi npknull/exceptions.cmi \
+    npknull/fieldInsensitivePtrOffs.cmi
+npknull/fieldInsensitivePtrOffs.cmx : npknull/subst.cmx \
+    newspeak/newspeak.cmx npknull/memloc.cmx npknull/exceptions.cmx \
+    npknull/fieldInsensitivePtrOffs.cmi
+npktests/npktests.cmo : npknull/subst.cmi \
+    npknull/fieldInsensitivePtrOffs.cmi
+npktests/npktests.cmx : npknull/subst.cmx \
+    npknull/fieldInsensitivePtrOffs.cmx

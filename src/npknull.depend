@@ -1,0 +1,137 @@
+version.cmi :
+newspeak/temps.cmi :
+newspeak/config.cmi :
+newspeak/eBigInt.cmi :
+newspeak/newspeak.cmi : newspeak/eBigInt.cmi newspeak/config.cmi
+utils/standardApplication.cmi :
+newspeak/npkcontext.cmi : newspeak/newspeak.cmi
+newspeak/lowspeak.cmi : newspeak/newspeak.cmi
+newspeak/npk2lpk.cmi : newspeak/newspeak.cmi newspeak/lowspeak.cmi
+utils/listUtils.cmi :
+utils/strSet.cmi :
+npkfuns/glbCollect.cmi : newspeak/newspeak.cmi newspeak/lowspeak.cmi
+npknull/context.cmi : newspeak/newspeak.cmi
+npknull/exceptions.cmi :
+npknull/memloc.cmi :
+npknull/abaddr.cmi : npknull/memloc.cmi npknull/dom.cmi
+npknull/dom.cmi : npknull/memloc.cmi
+npknull/subst.cmi : npknull/memloc.cmi
+npknull/fieldInsensitivePtrOffs.cmi : npknull/subst.cmi npknull/memloc.cmi \
+    npknull/dom.cmi
+npknull/nonNullPtr.cmi : npknull/subst.cmi npknull/memloc.cmi \
+    npknull/dom.cmi
+npknull/fPtrStore.cmi : npknull/subst.cmi npknull/memloc.cmi
+npknull/store.cmi : npknull/subst.cmi newspeak/newspeak.cmi \
+    npknull/memloc.cmi newspeak/lowspeak.cmi npknull/dom.cmi
+npknull/state.cmi : npknull/subst.cmi newspeak/newspeak.cmi \
+    npknull/memloc.cmi newspeak/lowspeak.cmi
+npknull/stubs.cmi : npknull/state.cmi
+npknull/solver.cmi : utils/strSet.cmi newspeak/newspeak.cmi \
+    newspeak/lowspeak.cmi
+npknull/stats.cmi : utils/strSet.cmi newspeak/lowspeak.cmi
+version.cmo : version.cmi
+version.cmx : version.cmi
+newspeak/temps.cmo : newspeak/temps.cmi
+newspeak/temps.cmx : newspeak/temps.cmi
+newspeak/config.cmo : newspeak/config.cmi
+newspeak/config.cmx : newspeak/config.cmi
+newspeak/eBigInt.cmo : newspeak/eBigInt.cmi
+newspeak/eBigInt.cmx : newspeak/eBigInt.cmi
+newspeak/newspeak.cmo : version.cmi newspeak/temps.cmi newspeak/eBigInt.cmi \
+    newspeak/config.cmi newspeak/newspeak.cmi
+newspeak/newspeak.cmx : version.cmx newspeak/temps.cmx newspeak/eBigInt.cmx \
+    newspeak/config.cmx newspeak/newspeak.cmi
+utils/standardApplication.cmo : utils/standardApplication.cmi
+utils/standardApplication.cmx : utils/standardApplication.cmi
+newspeak/npkcontext.cmo : utils/standardApplication.cmi \
+    newspeak/newspeak.cmi newspeak/npkcontext.cmi
+newspeak/npkcontext.cmx : utils/standardApplication.cmx \
+    newspeak/newspeak.cmx newspeak/npkcontext.cmi
+newspeak/lowspeak.cmo : utils/standardApplication.cmi \
+    newspeak/npkcontext.cmi newspeak/newspeak.cmi newspeak/config.cmi \
+    newspeak/lowspeak.cmi
+newspeak/lowspeak.cmx : utils/standardApplication.cmx \
+    newspeak/npkcontext.cmx newspeak/newspeak.cmx newspeak/config.cmx \
+    newspeak/lowspeak.cmi
+newspeak/npk2lpk.cmo : newspeak/temps.cmi newspeak/npkcontext.cmi \
+    newspeak/newspeak.cmi newspeak/lowspeak.cmi newspeak/npk2lpk.cmi
+newspeak/npk2lpk.cmx : newspeak/temps.cmx newspeak/npkcontext.cmx \
+    newspeak/newspeak.cmx newspeak/lowspeak.cmx newspeak/npk2lpk.cmi
+utils/listUtils.cmo : utils/listUtils.cmi
+utils/listUtils.cmx : utils/listUtils.cmi
+utils/strSet.cmo : utils/strSet.cmi
+utils/strSet.cmx : utils/strSet.cmi
+npkfuns/glbCollect.cmo : utils/strSet.cmi newspeak/newspeak.cmi \
+    newspeak/lowspeak.cmi utils/listUtils.cmi npkfuns/glbCollect.cmi
+npkfuns/glbCollect.cmx : utils/strSet.cmx newspeak/newspeak.cmx \
+    newspeak/lowspeak.cmx utils/listUtils.cmx npkfuns/glbCollect.cmi
+npknull/context.cmo : utils/strSet.cmi newspeak/newspeak.cmi \
+    npknull/context.cmi
+npknull/context.cmx : utils/strSet.cmx newspeak/newspeak.cmx \
+    npknull/context.cmi
+npknull/exceptions.cmo : npknull/exceptions.cmi
+npknull/exceptions.cmx : npknull/exceptions.cmi
+npknull/memloc.cmo : npknull/memloc.cmi
+npknull/memloc.cmx : npknull/memloc.cmi
+npknull/abaddr.cmo : npknull/memloc.cmi npknull/exceptions.cmi \
+    npknull/dom.cmi npknull/abaddr.cmi
+npknull/abaddr.cmx : npknull/memloc.cmx npknull/exceptions.cmx \
+    npknull/dom.cmx npknull/abaddr.cmi
+npknull/dom.cmo : npknull/memloc.cmi npknull/dom.cmi
+npknull/dom.cmx : npknull/memloc.cmx npknull/dom.cmi
+npknull/subst.cmo : npknull/memloc.cmi utils/listUtils.cmi \
+    npknull/exceptions.cmi npknull/subst.cmi
+npknull/subst.cmx : npknull/memloc.cmx utils/listUtils.cmx \
+    npknull/exceptions.cmx npknull/subst.cmi
+npknull/fieldInsensitivePtrOffs.cmo : npknull/subst.cmi \
+    newspeak/newspeak.cmi npknull/memloc.cmi npknull/exceptions.cmi \
+    npknull/fieldInsensitivePtrOffs.cmi
+npknull/fieldInsensitivePtrOffs.cmx : npknull/subst.cmx \
+    newspeak/newspeak.cmx npknull/memloc.cmx npknull/exceptions.cmx \
+    npknull/fieldInsensitivePtrOffs.cmi
+npknull/nonNullPtr.cmo : npknull/subst.cmi newspeak/newspeak.cmi \
+    npknull/memloc.cmi utils/listUtils.cmi npknull/exceptions.cmi \
+    npknull/dom.cmi npknull/nonNullPtr.cmi
+npknull/nonNullPtr.cmx : npknull/subst.cmx newspeak/newspeak.cmx \
+    npknull/memloc.cmx utils/listUtils.cmx npknull/exceptions.cmx \
+    npknull/dom.cmx npknull/nonNullPtr.cmi
+npknull/fPtrStore.cmo : npknull/subst.cmi npknull/memloc.cmi \
+    npknull/fPtrStore.cmi
+npknull/fPtrStore.cmx : npknull/subst.cmx npknull/memloc.cmx \
+    npknull/fPtrStore.cmi
+npknull/store.cmo : npknull/nonNullPtr.cmi newspeak/newspeak.cmi \
+    npknull/memloc.cmi newspeak/lowspeak.cmi \
+    npknull/fieldInsensitivePtrOffs.cmi npknull/fPtrStore.cmi \
+    npknull/exceptions.cmi npknull/store.cmi
+npknull/store.cmx : npknull/nonNullPtr.cmx newspeak/newspeak.cmx \
+    npknull/memloc.cmx newspeak/lowspeak.cmx \
+    npknull/fieldInsensitivePtrOffs.cmx npknull/fPtrStore.cmx \
+    npknull/exceptions.cmx npknull/store.cmi
+npknull/state.cmo : npknull/subst.cmi npknull/store.cmi \
+    newspeak/newspeak.cmi npknull/memloc.cmi newspeak/lowspeak.cmi \
+    npknull/exceptions.cmi npknull/dom.cmi npknull/abaddr.cmi \
+    npknull/state.cmi
+npknull/state.cmx : npknull/subst.cmx npknull/store.cmx \
+    newspeak/newspeak.cmx npknull/memloc.cmx newspeak/lowspeak.cmx \
+    npknull/exceptions.cmx npknull/dom.cmx npknull/abaddr.cmx \
+    npknull/state.cmi
+npknull/stubs.cmo : npknull/state.cmi npknull/memloc.cmi npknull/stubs.cmi
+npknull/stubs.cmx : npknull/state.cmx npknull/memloc.cmx npknull/stubs.cmi
+npknull/solver.cmo : npknull/subst.cmi npknull/stubs.cmi utils/strSet.cmi \
+    npknull/state.cmi newspeak/newspeak.cmi npknull/memloc.cmi \
+    newspeak/lowspeak.cmi utils/listUtils.cmi npknull/exceptions.cmi \
+    npknull/context.cmi npknull/solver.cmi
+npknull/solver.cmx : npknull/subst.cmx npknull/stubs.cmx utils/strSet.cmx \
+    npknull/state.cmx newspeak/newspeak.cmx npknull/memloc.cmx \
+    newspeak/lowspeak.cmx utils/listUtils.cmx npknull/exceptions.cmx \
+    npknull/context.cmx npknull/solver.cmi
+npknull/stats.cmo : utils/strSet.cmi newspeak/newspeak.cmi \
+    newspeak/lowspeak.cmi npknull/stats.cmi
+npknull/stats.cmx : utils/strSet.cmx newspeak/newspeak.cmx \
+    newspeak/lowspeak.cmx npknull/stats.cmi
+npknull/npknull.cmo : npknull/stats.cmi utils/standardApplication.cmi \
+    npknull/solver.cmi newspeak/npk2lpk.cmi newspeak/newspeak.cmi \
+    npkfuns/glbCollect.cmi npknull/context.cmi
+npknull/npknull.cmx : npknull/stats.cmx utils/standardApplication.cmx \
+    npknull/solver.cmx newspeak/npk2lpk.cmx newspeak/newspeak.cmx \
+    npkfuns/glbCollect.cmx npknull/context.cmx

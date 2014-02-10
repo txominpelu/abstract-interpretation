@@ -1,0 +1,212 @@
+   0  $accept : %entry% $end
+
+   1  parse : SHARP PRAGMA pp_token_list NEW_LINE
+   2        | SHARP INTEGER STRING integer_list NEW_LINE
+   3        | SHARP INTEGER SECTION integer_list NEW_LINE
+
+   4  pp_token_list : pp_token pp_token_list
+   5                |
+
+   6  pp_token : INTEGER
+   7           | STRING
+   8           | SECTION
+   9           | IDENTIFIER
+  10           | PUNCTUATOR
+
+  11  integer_list : INTEGER integer_list
+  12               |
+
+  13  %entry% : '\001' parse
+
+state 0
+	$accept : . %entry% $end  (0)
+
+	'\001'  shift 1
+	.  error
+
+	%entry%  goto 2
+
+
+state 1
+	%entry% : '\001' . parse  (13)
+
+	SHARP  shift 3
+	.  error
+
+	parse  goto 4
+
+
+state 2
+	$accept : %entry% . $end  (0)
+
+	$end  accept
+
+
+state 3
+	parse : SHARP . PRAGMA pp_token_list NEW_LINE  (1)
+	parse : SHARP . INTEGER STRING integer_list NEW_LINE  (2)
+	parse : SHARP . INTEGER SECTION integer_list NEW_LINE  (3)
+
+	PRAGMA  shift 5
+	INTEGER  shift 6
+	.  error
+
+
+state 4
+	%entry% : '\001' parse .  (13)
+
+	.  reduce 13
+
+
+state 5
+	parse : SHARP PRAGMA . pp_token_list NEW_LINE  (1)
+	pp_token_list : .  (5)
+
+	IDENTIFIER  shift 7
+	PUNCTUATOR  shift 8
+	SECTION  shift 9
+	STRING  shift 10
+	INTEGER  shift 11
+	NEW_LINE  reduce 5
+
+	pp_token_list  goto 12
+	pp_token  goto 13
+
+
+state 6
+	parse : SHARP INTEGER . STRING integer_list NEW_LINE  (2)
+	parse : SHARP INTEGER . SECTION integer_list NEW_LINE  (3)
+
+	SECTION  shift 14
+	STRING  shift 15
+	.  error
+
+
+state 7
+	pp_token : IDENTIFIER .  (9)
+
+	.  reduce 9
+
+
+state 8
+	pp_token : PUNCTUATOR .  (10)
+
+	.  reduce 10
+
+
+state 9
+	pp_token : SECTION .  (8)
+
+	.  reduce 8
+
+
+state 10
+	pp_token : STRING .  (7)
+
+	.  reduce 7
+
+
+state 11
+	pp_token : INTEGER .  (6)
+
+	.  reduce 6
+
+
+state 12
+	parse : SHARP PRAGMA pp_token_list . NEW_LINE  (1)
+
+	NEW_LINE  shift 16
+	.  error
+
+
+state 13
+	pp_token_list : pp_token . pp_token_list  (4)
+	pp_token_list : .  (5)
+
+	IDENTIFIER  shift 7
+	PUNCTUATOR  shift 8
+	SECTION  shift 9
+	STRING  shift 10
+	INTEGER  shift 11
+	NEW_LINE  reduce 5
+
+	pp_token_list  goto 17
+	pp_token  goto 13
+
+
+state 14
+	parse : SHARP INTEGER SECTION . integer_list NEW_LINE  (3)
+	integer_list : .  (12)
+
+	INTEGER  shift 18
+	NEW_LINE  reduce 12
+
+	integer_list  goto 19
+
+
+state 15
+	parse : SHARP INTEGER STRING . integer_list NEW_LINE  (2)
+	integer_list : .  (12)
+
+	INTEGER  shift 18
+	NEW_LINE  reduce 12
+
+	integer_list  goto 20
+
+
+state 16
+	parse : SHARP PRAGMA pp_token_list NEW_LINE .  (1)
+
+	.  reduce 1
+
+
+state 17
+	pp_token_list : pp_token pp_token_list .  (4)
+
+	.  reduce 4
+
+
+state 18
+	integer_list : INTEGER . integer_list  (11)
+	integer_list : .  (12)
+
+	INTEGER  shift 18
+	NEW_LINE  reduce 12
+
+	integer_list  goto 21
+
+
+state 19
+	parse : SHARP INTEGER SECTION integer_list . NEW_LINE  (3)
+
+	NEW_LINE  shift 22
+	.  error
+
+
+state 20
+	parse : SHARP INTEGER STRING integer_list . NEW_LINE  (2)
+
+	NEW_LINE  shift 23
+	.  error
+
+
+state 21
+	integer_list : INTEGER integer_list .  (11)
+
+	.  reduce 11
+
+
+state 22
+	parse : SHARP INTEGER SECTION integer_list NEW_LINE .  (3)
+
+	.  reduce 3
+
+
+state 23
+	parse : SHARP INTEGER STRING integer_list NEW_LINE .  (2)
+
+	.  reduce 2
+
+
+11 terminals, 6 nonterminals
+14 grammar rules, 24 states

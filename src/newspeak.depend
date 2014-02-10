@@ -1,0 +1,42 @@
+version.cmi :
+newspeak/temps.cmi :
+newspeak/config.cmi :
+newspeak/eBigInt.cmi :
+newspeak/newspeak.cmi : newspeak/eBigInt.cmi newspeak/config.cmi
+utils/standardApplication.cmi :
+newspeak/npkcontext.cmi : newspeak/newspeak.cmi
+newspeak/lowspeak.cmi : newspeak/newspeak.cmi
+newspeak/npk2lpk.cmi : newspeak/newspeak.cmi newspeak/lowspeak.cmi
+newspeak/npkil.cmi : newspeak/newspeak.cmi
+version.cmo : version.cmi
+version.cmx : version.cmi
+newspeak/temps.cmo : newspeak/temps.cmi
+newspeak/temps.cmx : newspeak/temps.cmi
+newspeak/config.cmo : newspeak/config.cmi
+newspeak/config.cmx : newspeak/config.cmi
+newspeak/eBigInt.cmo : newspeak/eBigInt.cmi
+newspeak/eBigInt.cmx : newspeak/eBigInt.cmi
+newspeak/newspeak.cmo : version.cmi newspeak/temps.cmi newspeak/eBigInt.cmi \
+    newspeak/config.cmi newspeak/newspeak.cmi
+newspeak/newspeak.cmx : version.cmx newspeak/temps.cmx newspeak/eBigInt.cmx \
+    newspeak/config.cmx newspeak/newspeak.cmi
+utils/standardApplication.cmo : utils/standardApplication.cmi
+utils/standardApplication.cmx : utils/standardApplication.cmi
+newspeak/npkcontext.cmo : utils/standardApplication.cmi \
+    newspeak/newspeak.cmi newspeak/npkcontext.cmi
+newspeak/npkcontext.cmx : utils/standardApplication.cmx \
+    newspeak/newspeak.cmx newspeak/npkcontext.cmi
+newspeak/lowspeak.cmo : utils/standardApplication.cmi \
+    newspeak/npkcontext.cmi newspeak/newspeak.cmi newspeak/config.cmi \
+    newspeak/lowspeak.cmi
+newspeak/lowspeak.cmx : utils/standardApplication.cmx \
+    newspeak/npkcontext.cmx newspeak/newspeak.cmx newspeak/config.cmx \
+    newspeak/lowspeak.cmi
+newspeak/npk2lpk.cmo : newspeak/temps.cmi newspeak/npkcontext.cmi \
+    newspeak/newspeak.cmi newspeak/lowspeak.cmi newspeak/npk2lpk.cmi
+newspeak/npk2lpk.cmx : newspeak/temps.cmx newspeak/npkcontext.cmx \
+    newspeak/newspeak.cmx newspeak/lowspeak.cmx newspeak/npk2lpk.cmi
+newspeak/npkil.cmo : newspeak/npkcontext.cmi newspeak/newspeak.cmi \
+    newspeak/config.cmi newspeak/npkil.cmi
+newspeak/npkil.cmx : newspeak/npkcontext.cmx newspeak/newspeak.cmx \
+    newspeak/config.cmx newspeak/npkil.cmi
