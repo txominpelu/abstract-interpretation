@@ -251,27 +251,27 @@ let name_generator =
   (function () -> count := !count + 1; Printf.sprintf "%d" !count);;
 
 let rec dot_of_stmtkind blockname stkind current_state =
+  let build_branch br expr =
+    let state_br = name_generator() in
+    let br_dot = Printf.sprintf "%s -- %s [label=\"%s\"]\n" current_state state_br expr in
+    let (br_develop, last_state_br) = dot_of_blk "" br state_br in
+    (fun last_state -> br_dot ^ br_develop ^ (Printf.sprintf "%s -- %s \n" last_state_br last_state)) in
+  let negate_exp expr = ("!" ^ (string_of_exp expr)) in
   match stkind with
     | Set (lv, e) ->
       let next_state = name_generator() in
       let assign = Printf.sprintf "%s -- %s [label=\"%s:=%s\"]" current_state next_state (string_of_lval lv) (string_of_exp e) in
       (next_state, assign)
     | If (e, br1, br2) ->
-      let state_br1 = name_generator() in
-      let br1_dot = Printf.sprintf "%s -- %s [label=\"%s\"]\n" current_state state_br1 (string_of_exp e) in
-      let (br1_develop, last_state_br1) = dot_of_blk "" br1 state_br1 in
-      let state_br2 = name_generator() in
-      let br2_dot =Printf.sprintf "%s -- %s [label=\"!%s\"]\n" current_state state_br2 (string_of_exp e) in
-      let (br2_develop, last_state_br2) = dot_of_blk "" br2 state_br2 in
+      let br1_dot = build_branch br1 (string_of_exp e) in
+      let br2_dot = build_branch br2 (negate_exp e) in
       let last_state = name_generator() in
-      let last_br2 = Printf.sprintf "%s -- %s \n" last_state_br2 last_state in
-      let last_br1 = Printf.sprintf "%s -- %s\n" last_state_br1 last_state in
-      (last_state, br1_dot ^ br1_develop ^ last_br1 ^ br2_dot ^ br2_develop ^ last_br2)
+      (last_state, (br1_dot last_state) ^ (br2_dot  last_state))
     | While (e, body) ->
-      let  text = "while "^string_of_exp e^" {\n"
-	^string_of_blk body
-	^"    "^"}" in
-      (current_state, text)
+      let br_dot = build_branch body (string_of_exp e) current_state in
+      let last_state = name_generator() in
+      let end_of_while = Printf.sprintf "%s -- %s [label=\"%s\"]" current_state last_state (negate_exp e) in
+      (last_state, br_dot ^ end_of_while)
     | Call f ->
       let text = string_of_funexp f^"();" in
       (current_state, text)
