@@ -52,10 +52,14 @@ let neg x =
     | Val _ -> Val Int32.zero
     | Top -> Top
 
+let minus x =
+  match x with
+    | Val n -> Val (Int32.neg n)
+    | Top -> Top
 
 let add x y =
   match (x, y) with
-      (Val x, Val y) -> 
+      (Val x, Val y) ->
 	let z = Int32.add x y in
          if (Int64.compare (Int64.add (Int64.of_int32 x) (Int64.of_int32 y)) (Int64.of_int32 z) != 0) then Top
 	  else Val z

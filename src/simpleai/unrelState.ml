@@ -43,6 +43,7 @@ sig
   val contains: t -> t -> bool
   val implies: (t * Simple.cmp * Int32.t) -> bool
   val neg: t -> t
+  val minus: t -> t
   val add: t -> t -> t
   val is_safe_add: t -> t -> bool
   val guard: bop -> t -> t -> t
@@ -100,19 +101,20 @@ struct
 	  in
 	    Map.iter join_info s1;
 	    Some !res
-	      
-  let add_var x s = 
+
+  let add_var x s =
     match s with
 	Some s -> Some (Map.add x Val.universe s)
       | None -> None
-	  
+
   let eval_lval lv =
     match lv with
 	Global x -> x
-	  
+
   let apply_binop op x y =
     match op with
 	PlusI -> Val.add x y
+      | MinusI -> Val.add x (Val.minus y)
       | Gt | Eq -> failwith "Unsupported binary operator"
       | _ -> Val.universe
 
