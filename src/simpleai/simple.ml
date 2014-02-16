@@ -272,12 +272,12 @@ let rec dot_of_stmtkind blockname stkind current_state =
       let last_state = name_generator() in
       let end_of_while = Printf.sprintf "%s -- %s [label=\"%s\"]" current_state last_state (negate_exp e) in
       (last_state, br_dot ^ end_of_while)
-    | Call f ->
-      let text = string_of_funexp f^"();" in
-      (current_state, text)
+    | Call (FunId f) ->
+      (f, Printf.sprintf "%s -- %s" current_state f)
     | Assert x ->
-      let text = "assert "^string_of_assertion x^";" in
-      (current_state, text)
+      let assert_state = name_generator() in
+      let str_assert = string_of_assertion x in
+      (assert_state, Printf.sprintf "%s -- %s [label=\"%s\"]" current_state assert_state str_assert )
 
 and dot_of_stmt blockname (st, loc) = dot_of_stmtkind blockname st
 
