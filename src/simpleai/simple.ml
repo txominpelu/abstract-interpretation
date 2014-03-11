@@ -309,9 +309,6 @@ and to_dot prog filename =
         close_out fid;
     with Sys_error _ as e ->
         print_string (Printf.sprintf "Cannot open file \"%s\": %s\n" filename (Printexc.to_string e))
-    (* A compléter *)
-    (*close_out fid*)
-
 
 (* DOT example:
    graph graphname {

@@ -1,18 +1,18 @@
 (*
-  C2Newspeak: compiles C code into Newspeak. Newspeak is a minimal language 
+  C2Newspeak: compiles C code into Newspeak. Newspeak is a minimal language
   well-suited for static analysis.
   Copyright (C) 2007  Charles Hymans
-  
+
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
   License as published by the Free Software Foundation; either
   version 2.1 of the License, or (at your option) any later version.
-  
+
   This library is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
   Lesser General Public License for more details.
-  
+
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
@@ -55,10 +55,10 @@ struct
   (* None is emptyset *)
   type t = Val.t Map.t option
 
-  let to_string s = 
+  let to_string s =
     match s with
 	None -> "{}"
-      | Some s -> 
+      | Some s ->
 	  let res = ref "" in
 	  let string_of_info x v =
 	    let v = Val.to_string v in
@@ -67,12 +67,12 @@ struct
 	    Map.iter string_of_info s;
 	    !res
 
-  let read s x = 
-    try Map.find x s 
+  let read s x =
+    try Map.find x s
     with Not_found -> invalid_arg ("CstState.read: variable "^x^" not declared")
-      
+
   let universe = Some Map.empty
-    
+
   let contains s1 s2 =
     match (s1, s2) with
 	(_, None) -> true
@@ -87,12 +87,12 @@ struct
 	      Map.iter has_constraint s1;
 	      true
 	  with Exit -> false
-    
 
-  let join s1 s2 = 
+
+  let join s1 s2 =
     match (s1, s2) with
 	(None, s) | (s, None) -> s
-      | (Some s1, Some s2) -> 
+      | (Some s1, Some s2) ->
 	  let res = ref Map.empty in
 	  let join_info x v1 =
 	    let v2 = read s2 x in
@@ -124,19 +124,19 @@ struct
       | Lval Global x -> read s x
       | Random b -> Val.of_bounds b
       | UnOp (Not, e) -> Val.neg (eval_exp s e)
-      | BinOp (op, e1, e2) -> 
+      | BinOp (op, e1, e2) ->
 	  let v1 = eval_exp s e1 in
 	  let v2 = eval_exp s e2 in
 	    apply_binop op v1 v2
-	      
-  let assign lv e s = 
+
+  let assign lv e s =
     match s with
 	None -> None
-      | Some s -> 
+      | Some s ->
 	  let x = eval_lval lv in
 	  let v = eval_exp s e in
 	    Some (Map.add x v s)
-     
+
   let exp_to_eq e s =
     let rec translate e =
       match e with
@@ -157,11 +157,11 @@ struct
 	| _ -> raise Unknown
     in
       translate e
-      
-  let guard e s = 
+
+  let guard e s =
     match s with
 	None -> None
-      | Some s -> 
+      | Some s ->
 	  try
 	    let (x, op, c) = exp_to_eq e s in
 	    let v = read s x in
@@ -170,10 +170,10 @@ struct
 	  with Unknown -> Some s
 	    | Emptyset -> None
 
-  let implies s (lv, cmp, c) = 
+  let implies s (lv, cmp, c) =
     match s with
 	None -> true
-      | Some s -> 
+      | Some s ->
 	  let x = eval_lval lv in
 	  let v = read s x in
 	  let c =
@@ -181,17 +181,18 @@ struct
 	      CInt i -> i
 	  in
 	    Val.implies (v, cmp, c)
-	      
-  let is_safe_binop s (op, e1, e2) = 
+
+  let is_safe_binop s (op, e1, e2) =
     match s with
 	None -> true
-      | Some s -> 
+      | Some s ->
 	  let v1 = eval_exp s e1 in
 	  let v2 = eval_exp s e2 in
 	    match op with
 		PlusI -> Val.is_safe_add v1 v2
+	      | MinusI -> Val.is_safe_add v1 (Val.minus v2)
 	      | Eq|Gt -> true
 	      | _ -> false
-	      
+
 
 end
