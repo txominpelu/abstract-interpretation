@@ -302,11 +302,13 @@ and to_dot prog filename =
     let (graph_dot, _) = dot_of_blk "" prog.init initial_name in
     res := !res^graph_dot;
     Hashtbl.iter dot_of_fundec prog.fundecs;
-    (*let fid = open_out filename in
-    let prog_dot = "" in*)
-    print_string !res;
-    Printf.sprintf "graph mygraph { %s } ";
-    ()
+    try
+        let fid = open_out filename in
+        let co = Format.formatter_of_out_channel fid in
+        Format.fprintf co "%s\n" !res;
+        close_out fid;
+    with Sys_error _ as e ->
+        print_string (Printf.sprintf "Cannot open file \"%s\": %s\n" filename (Printexc.to_string e))
     (* A compléter *)
     (*close_out fid*)
 

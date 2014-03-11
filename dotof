@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -e
+./bin/c2newspeak $1
+./bin/simpleai --to-dot a.dot a.npk
+dot -Tpng a.dot > $2
+open $2
+open $1
+
+
