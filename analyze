@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -e
+./bin/c2newspeak $1
+./bin/simpleai a.npk
+open $1

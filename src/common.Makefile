@@ -36,7 +36,7 @@ endif
 #utils
 CP=cp
 RM=rm -rf
-OCAMLC=ocamlc -w Ael 
+OCAMLC=ocamlc -annot -w Ael 
 
 OCAMLOPTCOMP=$(shell if ocamlopt.opt -v >/dev/null 2>&1; \
 		 then echo ocamlopt.opt ; \

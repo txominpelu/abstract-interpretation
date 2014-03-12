@@ -9,4 +9,7 @@
 *.npk
 *.dot
 *.png
+*.annot
+*.a
+doc
 bin
