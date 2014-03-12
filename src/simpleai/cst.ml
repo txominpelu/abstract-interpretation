@@ -72,7 +72,10 @@ let is_safe_add x y =
          (Int64.compare (Int64.add (Int64.of_int32 x) (Int64.of_int32 y)) (Int64.of_int32 z) == 0)
     | _ -> false
 
-let implies _ = false
+let implies (x, cmp, simpl) = match (x, cmp) with
+  | (Top, _) -> false
+  | (Val i, Simple.Equals) -> Int32.compare i simpl = 0
+  | (Val i, Simple.IsLess) -> Int32.compare i simpl < 0
 
 (* Restricts the value x to make the condition
    c op x true *)
