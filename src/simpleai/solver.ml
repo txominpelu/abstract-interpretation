@@ -39,7 +39,7 @@ let add_globals globals s =
 let rec fixpoint f s =
   (* TODO : encode the Kleene fixpoint algorithm to get the least
      fixpoint of f greater than s *)
-  let new_s = State.join s @@ f s in
+  let new_s = State.widen s @@ f s in
   if new_s = s then
     s
   else

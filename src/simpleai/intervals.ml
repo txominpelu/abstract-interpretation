@@ -42,6 +42,13 @@ let is_safe_minus_cst x y =
     let z = Int32.add x (Int32.neg y) in
     (Int64.compare (Int64.add (Int64.of_int32 x) (Int64.neg (Int64.of_int32 y))) (Int64.of_int32 z) == 0)
 
+let widen x y =
+  match (x, y) with
+    (Val (a, b), Val (c, d)) ->
+      let e = if a <= c then a else Int32.min_int in
+      let f = if b >= d then b else Int32.max_int in
+      Val (e, f)
+    | (_, _)  -> Val (Int32.min_int, Int32.max_int)
 
 let minus x y =
   match (x, y) with
@@ -77,9 +84,9 @@ let guard op c x =
   match (op, c, x) with
     | (LTE, Val(a, b), Val(c, d)) when Int32.compare b c > 0 -> raise Emptyset
     | (EQ, Val(a, b), Val(c, d)) when Int32.compare a c <> 0 || Int32.compare b d <> 0 -> raise Emptyset
-    | (LT, Val(a, b) as x1 , Val(c, d) as x2) if c >= b-> x1
-    | (LT, Val(a, b) as x1 , Val(c, d) as x2) if c >= a && c < b -> Val (a, c)
-    | (LT, Val(a, b) as x1 , Val(c, d) as x2) if c < a -> Bottom
+    | (LT, Val(a, b) , Val(e, f)) when e >= b -> c
+    | (LT, Val(a, b) , Val(e, f) ) when e >= a && e < b -> Val (a, e)
+    | (LT, Val(a, b) , Val(e, f) ) when e < a -> Bottom
     | _ -> x
 
 let to_string v =

@@ -46,6 +46,11 @@ let join x y =
       (Val x, Val y) when x = y -> Val x
     | _ -> Top
 
+let widen x y =
+  match (x, y) with
+      (Val x, Val y) when x = y -> Val x
+    | _ -> Top
+
 let neg x =
   match x with
       Val i when i = Int32.zero -> Val Int32.one
