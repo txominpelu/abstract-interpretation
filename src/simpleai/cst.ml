@@ -52,10 +52,24 @@ let neg x =
     | Val _ -> Val Int32.zero
     | Top -> Top
 
-let minus x =
-  match x with
-    | Val n -> Val (Int32.neg n)
-    | Top -> Top
+let is_safe_add x y =
+  match (x, y) with
+      (Val x, Val y) ->
+	let z = Int32.add x y in
+         (Int64.compare (Int64.add (Int64.of_int32 x) (Int64.of_int32 y)) (Int64.of_int32 z) == 0)
+    | _ -> false
+
+let is_safe_minus x y =
+  match (x, y) with
+      (Val x, Val y) ->
+	let z = Int32.add x (Int32.neg y) in
+         (Int64.compare (Int64.add (Int64.of_int32 x) (Int64.neg (Int64.of_int32 y))) (Int64.of_int32 z) == 0)
+    | _ -> false
+
+let minus x y =
+  match (x, y) with
+    | (Val n, Val n2) when is_safe_add x y -> Val (Int32.add n (Int32.neg n2) )
+    | _ -> Top
 
 let add x y =
   match (x, y) with
@@ -64,13 +78,6 @@ let add x y =
          if (Int64.compare (Int64.add (Int64.of_int32 x) (Int64.of_int32 y)) (Int64.of_int32 z) != 0) then Top
 	  else Val z
     | _ -> Top
-
-let is_safe_add x y =
-  match (x, y) with
-      (Val x, Val y) ->
-	let z = Int32.add x y in
-         (Int64.compare (Int64.add (Int64.of_int32 x) (Int64.of_int32 y)) (Int64.of_int32 z) == 0)
-    | _ -> false
 
 let implies (x, cmp, simpl) = match (x, cmp) with
   | (Top, _) -> false

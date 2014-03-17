@@ -43,9 +43,10 @@ sig
   val contains: t -> t -> bool
   val implies: (t * Simple.cmp * Int32.t) -> bool
   val neg: t -> t
-  val minus: t -> t
+  val minus: t -> t -> t
   val add: t -> t -> t
   val is_safe_add: t -> t -> bool
+  val is_safe_minus: t -> t -> bool
   val guard: bop -> t -> t -> t
   val to_string: t -> string
 end
@@ -114,7 +115,7 @@ struct
   let apply_binop op x y =
     match op with
 	PlusI -> Val.add x y
-      | MinusI -> Val.add x (Val.minus y)
+      | MinusI -> Val.minus x y
       | Gt | Eq -> failwith "Unsupported binary operator"
       | _ -> Val.universe
 
@@ -190,7 +191,7 @@ struct
 	  let v2 = eval_exp s e2 in
 	    match op with
 		PlusI -> Val.is_safe_add v1 v2
-	      | MinusI -> Val.is_safe_add v1 (Val.minus v2)
+	      | MinusI -> Val.is_safe_minus v1 v2
 	      | Eq|Gt -> true
 	      | _ -> false
 

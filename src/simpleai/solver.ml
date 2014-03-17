@@ -28,7 +28,9 @@
 
 open Simple
 
-module State = UnrelState.Make(Cst)
+(* module State = UnrelState.Make(Cst) *)
+
+module State = UnrelState.Make(Intervals)
 
 let add_globals globals s =
   List.fold_left (fun s' x -> State.add_var x s') s globals
