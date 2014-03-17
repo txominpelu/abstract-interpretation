@@ -27,6 +27,8 @@ let verbose = ref false
 
 let unroll = ref 0
 
+let delay = ref 0
+
 let current_loc = ref (Newspeak.dummy_loc "simpleai")
 
 let errors = ref StrSet.empty
@@ -34,6 +36,8 @@ let errors = ref StrSet.empty
 let set_verbose () = verbose := true
 
 let set_unroll (i: int) = unroll := i
+
+let set_delay (i: int) = delay := i
 
 let print_verbose str = if !verbose then print_endline str
 

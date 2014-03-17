@@ -36,14 +36,18 @@ let add_globals globals s =
   List.fold_left (fun s' x -> State.add_var x s') s globals
 
 
-let rec fixpoint f s =
+let rec fixpoint f s delay =
   (* TODO : encode the Kleene fixpoint algorithm to get the least
      fixpoint of f greater than s *)
-  let new_s = State.widen s @@ f s in
-  if new_s = s then
-    s
-  else
-    fixpoint f new_s
+  let rec loop x s =
+    if x > 0 then
+      let new_s = State.join s @@ f s in
+      print_string "\nJoining:\n";
+      if new_s = s then s else loop (x-1) new_s
+    else
+      let new_s = State.widen s @@ f s in
+      if new_s = s then s else loop x new_s in
+  loop delay s
 
 let check_exp loc e s =
   let rec check e =
@@ -61,7 +65,7 @@ let check_exp loc e s =
   in
     check e
 
-let compute prog unroll_count =
+let compute prog unroll_count delay =
   let rec transform_blk  = function
 	(While(e, blk) as w, position)::next ->
             let unroll =
@@ -118,7 +122,7 @@ let compute prog unroll_count =
 	    let s = State.guard e s in
 	      compute_blk body s
 	  in
-	  let s = fixpoint f s in
+	  let s = fixpoint f s delay in
 	  let s = State.guard (UnOp (Not, e)) s in
 	    s
       | Assert a ->

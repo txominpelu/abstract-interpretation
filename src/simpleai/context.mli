@@ -27,6 +27,8 @@ val set_verbose: unit -> unit
 
 val set_unroll: int -> unit
 
+val set_delay: int -> unit
+
 val print_verbose: string -> unit
 
 val set_loc: Newspeak.location -> unit
@@ -34,5 +36,6 @@ val set_loc: Newspeak.location -> unit
 val print_err: string -> unit
 
 val unroll : int ref
+val delay : int ref
 val dot_output : bool ref
 val dot_filename : string ref

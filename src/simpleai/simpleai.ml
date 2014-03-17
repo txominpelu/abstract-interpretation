@@ -27,6 +27,7 @@ let speclist =
   [
     ("--verbose", Arg.Unit Context.set_verbose, "prints more details");
     ("--unroll", (Arg.Int Context.set_unroll), "unrolls the loops n-times");
+    ("--delay", (Arg.Int Context.set_delay), "delays the widening n-times");
     ("--to-dot", Arg.String (fun s -> Context.dot_filename := s;Context.dot_output := true),  "outputs a DOT representation of the CFG")
   ]
 
@@ -37,7 +38,7 @@ let process input =
     Simple.to_dot simple !Context.dot_filename
   else
     print_string (Printf.sprintf "Unrolling:%d\n" !Context.unroll);
-    Solver.compute simple !Context.unroll
+    Solver.compute simple !Context.unroll !Context.delay
 
 let _ =
   StandardApplication.launch_process_with_npk_argument "simpleai" speclist
