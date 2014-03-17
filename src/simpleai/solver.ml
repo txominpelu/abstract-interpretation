@@ -42,7 +42,6 @@ let rec fixpoint f s delay =
   let rec loop x s =
     if x > 0 then
       let new_s = State.join s @@ f s in
-      print_string "\nJoining:\n";
       if new_s = s then s else loop (x-1) new_s
     else
       let new_s = State.widen s @@ f s in
