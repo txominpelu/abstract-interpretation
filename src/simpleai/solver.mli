@@ -23,4 +23,4 @@
   email: charles.hymans@penjili.org
 *)
 
-val compute: Simple.t -> unit
+val compute: Simple.t -> int -> unit

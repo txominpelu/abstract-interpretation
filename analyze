@@ -2,5 +2,5 @@
 
 set -e
 ./bin/c2newspeak $1
-./bin/simpleai a.npk
+./bin/simpleai --unroll $2 a.npk
 open $1

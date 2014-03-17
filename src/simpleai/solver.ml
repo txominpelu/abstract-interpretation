@@ -61,16 +61,32 @@ let check_exp loc e s =
   in
     check e
 
-let compute prog =
+let compute prog unroll_count =
+  let rec transform_blk  = function
+	(While(e, blk) as w, position)::next ->
+            let unroll =
+              let rec step index =
+                if index = 0 then (w,position) else (If(e, blk @ [(step (index - 1))], next), position) in
+              step unroll_count in
+            unroll :: (transform_blk next)
+      | x :: next -> x :: transform_blk next
+      | [] -> [] in
+
   let rec compute_blk x s =
     match x with
-	x::tl ->
-	  let s = compute_stmt x s in
-	    compute_blk tl s
+	(While(e, blk) as w, position)::next ->
+            let unroll =
+              let rec step index =
+                if index = 0 then (w,position) else (If(e, blk @ [(step (index - 1))], next), position) in
+              step unroll_count in
+	  let s = compute_stmt unroll s in
+	    compute_blk next s
       | [] -> s
+      | y::tl ->
+	  let s = (compute_stmt y s) in
+	    compute_blk tl s
 
   and compute_stmt (x, loc) s =
-    (*print_endline (Simple.string_of_loc loc^": "^State.to_string s^" - "^Simple.string_of_stmtkind x);*)
     print_endline (Simple.string_of_loc loc^": "^State.to_string s);
     compute_stmtkind loc x s
 
@@ -113,6 +129,7 @@ let compute prog =
 
 
     print_endline "Analysis starts";
+    Hashtbl.iter (fun f -> fun fdec -> Hashtbl.replace prog.fundecs f (transform_blk fdec)) prog.fundecs;
     let s = State.universe in
     let s = add_globals prog.globals s in
     let s = compute_blk prog.init s in
