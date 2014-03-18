@@ -89,8 +89,14 @@ let guard op c x =
     | (LT, Val(a, b) , Val(e, f) ) when e < a -> Bottom
     | _ -> x
 
+let string_of_int32 = function
+    | a when Int32.compare a Int32.min_int = 0 -> "INT_MIN"
+    | a when Int32.compare a Int32.max_int = 0 -> "INT_MAX"
+    | a -> Int32.to_string a
+
 let to_string v =
   match v with
-    | Val (a, b) -> Printf.sprintf "[%s,%s]" (Int32.to_string a) (Int32.to_string b)
+    | Val (a, b) ->
+      Printf.sprintf "[%s,%s]" (string_of_int32 a) (string_of_int32 b)
     | Bottom -> "?"
     | Top -> "T"
