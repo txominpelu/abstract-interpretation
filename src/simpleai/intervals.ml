@@ -85,8 +85,18 @@ let guard op c x =
     | (LTE, Val(a, b), Val(c, d)) when Int32.compare b c > 0 -> raise Emptyset
     | (EQ, Val(a, b), Val(c, d)) when Int32.compare a c <> 0 || Int32.compare b d <> 0 -> raise Emptyset
     | (LT, Val(a, b) , Val(e, f)) when e >= b -> c
-    | (LT, Val(a, b) , Val(e, f) ) when e >= a && e < b -> Val (a, e)
-    | (LT, Val(a, b) , Val(e, f) ) when e < a -> Bottom
+    | (LT, Val(a, b) , Val(e, f) ) when e > a && e < b -> Val (a, Int32.add (Int32.neg Int32.one) e)
+    | (LT, Val(a, b) , Val(e, f) ) when e <= a -> Bottom
+    | (GT, Val(a, b) , Val(e, f)) when f <= a -> c
+    | (GT, Val(a, b) , Val(e, f) ) when f > a && f < b -> Val (f, b)
+    | (GT, Val(a, b) , Val(e, f) ) when f = a && f < b -> Val (Int32.add Int32.one a, b)
+    | (GT, Val(a, b) , Val(e, f) ) when e >= a -> Bottom
+    | (GTE, Val(a, b) , Val(e, f)) when f <= a -> c
+    | (GTE, Val(a, b) , Val(e, f) ) when f >= a && f < b -> Val (f, b)
+    | (GTE, Val(a, b) , Val(e, f) ) -> Bottom
+    | (LTE, Val(a, b) , Val(e, f)) when e >= b -> c
+    | (LTE, Val(a, b) , Val(e, f) ) when e >= a -> Val (a, min e b)
+    | (LTE, Val(a, b) , Val(e, f) ) when e < a -> Bottom
     | _ -> x
 
 let string_of_int32 = function
