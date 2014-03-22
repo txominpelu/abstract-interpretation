@@ -64,6 +64,8 @@ let is_safe_add x y =
          (Int64.compare (Int64.add (Int64.of_int32 x) (Int64.of_int32 y)) (Int64.of_int32 z) == 0)
     | _ -> false
 
+let is_safe_mult x y = false
+
 let is_safe_minus x y =
   match (x, y) with
       (Val x, Val y) ->
@@ -74,6 +76,10 @@ let is_safe_minus x y =
 let minus x y =
   match (x, y) with
     | (Val n, Val n2) when is_safe_add x y -> Val (Int32.add n (Int32.neg n2) )
+    | _ -> Top
+
+let mult x y = 
+  match (x, y) with
     | _ -> Top
 
 let add x y =

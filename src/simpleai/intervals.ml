@@ -52,8 +52,20 @@ let widen x y =
 
 let minus x y =
   match (x, y) with
-    | (Val (a, b), Val(c, d)) when is_safe_add_cst a  (Int32.neg c) && is_safe_add_cst b (Int32.neg d) ->
-        Val ((Int32.add a (Int32.neg c)), (Int32.add b (Int32.neg d)))
+    | (Val (a, b), Val(c, d)) when is_safe_add_cst a  (Int32.neg d) && is_safe_add_cst b (Int32.neg c) ->
+        Val ((Int32.add a (Int32.neg d)), (Int32.add b (Int32.neg c)))
+    | _ -> Top
+
+let mult x y = 
+  match (x, y) with
+    | (Val (a, b), Val(c, d)) ->
+        let pairs = [(a , c); (a , d); (b , c); (b , d);] in
+        let products = List.map (fun (x, y) -> Int32.mul x y) pairs in
+        let newa = List.fold_left (fun acc -> fun v -> min acc v)
+        Int32.max_int products in 
+        let newb = List.fold_left (fun acc -> fun v -> max acc v)
+        Int32.min_int products in
+        Val (newa, newb)
     | _ -> Top
 
 let add x y =
@@ -65,13 +77,24 @@ let add x y =
 let is_safe_minus x y =
   match (x, y) with
     | (Val (a, b), Val(c, d))->
-        is_safe_minus_cst a c && is_safe_minus_cst b d
+        is_safe_minus_cst a d && is_safe_minus_cst b c
     | _ -> false
 
 let is_safe_add x y =
   match (x, y) with
     | (Val (a, b), Val(c, d))->
         is_safe_add_cst a c && is_safe_add_cst b d
+    | _ -> false
+
+let is_safe_mult x y =
+  match (x, y) with
+    | (Val (a, b), Val(c, d))->
+        let pairs = [(a , c); (a , d); (b , c); (b , d);] in
+        List.for_all (fun v -> 
+          let (x, y) = v in
+          let z = Int32.mul x y in
+          (Int64.compare (Int64.mul (Int64.of_int32 x) (Int64.of_int32 y)) (Int64.of_int32 z) == 0)
+        ) pairs
     | _ -> false
 
 let implies (x, cmp, simpl) = match (x, cmp) with

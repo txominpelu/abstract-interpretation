@@ -10,6 +10,7 @@
 *.dot
 *.png
 *.annot
+*.depend
 *.a
 doc
 bin
