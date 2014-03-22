@@ -66,6 +66,8 @@ let is_safe_add x y =
 
 let is_safe_mult x y = false
 
+let is_safe_div x y = false
+
 let is_safe_minus x y =
   match (x, y) with
       (Val x, Val y) ->
@@ -79,6 +81,10 @@ let minus x y =
     | _ -> Top
 
 let mult x y = 
+  match (x, y) with
+    | _ -> Top
+
+let div x y = 
   match (x, y) with
     | _ -> Top
 

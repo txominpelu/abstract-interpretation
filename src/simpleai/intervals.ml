@@ -56,17 +56,21 @@ let minus x y =
         Val ((Int32.add a (Int32.neg d)), (Int32.add b (Int32.neg c)))
     | _ -> Top
 
-let mult x y = 
+let min_max f x y=
   match (x, y) with
     | (Val (a, b), Val(c, d)) ->
         let pairs = [(a , c); (a , d); (b , c); (b , d);] in
-        let products = List.map (fun (x, y) -> Int32.mul x y) pairs in
+        let products = List.map (fun (x, y) -> f x y) pairs in
         let newa = List.fold_left (fun acc -> fun v -> min acc v)
         Int32.max_int products in 
         let newb = List.fold_left (fun acc -> fun v -> max acc v)
         Int32.min_int products in
         Val (newa, newb)
     | _ -> Top
+
+let mult x y = min_max Int32.mul x y
+
+let div x y = min_max Int32.div x y
 
 let add x y =
   match (x, y) with
@@ -86,15 +90,30 @@ let is_safe_add x y =
         is_safe_add_cst a c && is_safe_add_cst b d
     | _ -> false
 
-let is_safe_mult x y =
+let is_safe f64 f32 x y =
   match (x, y) with
     | (Val (a, b), Val(c, d))->
         let pairs = [(a , c); (a , d); (b , c); (b , d);] in
         List.for_all (fun v -> 
           let (x, y) = v in
-          let z = Int32.mul x y in
-          (Int64.compare (Int64.mul (Int64.of_int32 x) (Int64.of_int32 y)) (Int64.of_int32 z) == 0)
+          let z = f32 x y in
+          (Int64.compare (f64 (Int64.of_int32 x) (Int64.of_int32 y)) (Int64.of_int32 z) == 0)
         ) pairs
+    | _ -> false
+
+let is_safe_mult x y =
+    is_safe Int64.mul Int32.mul x y
+
+let is_safe_div x y =
+  let eq_zero x = Int32.compare x Int32.zero == 0 in
+  let gte_zero x = Int32.compare x Int32.zero >= 0 in
+  let lte_zero x = Int32.compare x Int32.zero <= 0 in
+  match (x, y) with
+    | (Val (a, b), Val(c, d))->
+        is_safe Int64.div Int32.div x y 
+           && not (eq_zero c)
+           && not (eq_zero d)
+           && not (lte_zero c && gte_zero d)
     | _ -> false
 
 let implies (x, cmp, simpl) = match (x, cmp) with
